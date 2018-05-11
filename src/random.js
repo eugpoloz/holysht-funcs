@@ -8,24 +8,18 @@ function getIdx(array: Array<*>) {
   return Math.floor(Math.random() * length);
 }
 
-type QuoteProps = Array<{
-  quote: string,
-  link?: string
-}>;
+type QuoteProps = Array<string>;
 
-async function pickAQuote(quotes: QuoteProps) {
+async function pickAQuote(quotes: QuoteProps, joke: string) {
   const quoteContainer = document.querySelector(
     ".holyheader_quote .quote-content"
   );
 
-  const quoteId = getIdx(quotes);
-  const currentQuote = quotes[quoteId];
-
   if (quoteContainer instanceof HTMLElement) {
-    const { quote, link = null } = currentQuote;
-    const quoteHTML = `${quote}${link !== null
-      ? `<a href="${link}">Читать дальше...</a>`
-      : ""}`;
+    const quoteId = getIdx(quotes);
+    const currentQuote = quotes[quoteId];
+
+    const quoteHTML = `${currentQuote} <a href="${joke}">Смотреть котиков?</a>`;
 
     quoteContainer.innerHTML = quoteHTML;
   }

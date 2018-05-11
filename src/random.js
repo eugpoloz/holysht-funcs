@@ -10,7 +10,7 @@ function getIdx(array: Array<*>) {
 
 type QuoteProps = Array<{
   quote: string,
-  link: string
+  link?: string
 }>;
 
 async function pickAQuote(quotes: QuoteProps) {
@@ -22,8 +22,10 @@ async function pickAQuote(quotes: QuoteProps) {
   const currentQuote = quotes[quoteId];
 
   if (quoteContainer instanceof HTMLElement) {
-    const { quote, link } = currentQuote;
-    const quoteHTML = `${quote} <a href="${link}">Читать дальше...</a>`;
+    const { quote, link = null } = currentQuote;
+    const quoteHTML = `${quote}${link !== null
+      ? `<a href="${link}">Читать дальше...</a>`
+      : ""}`;
 
     quoteContainer.innerHTML = quoteHTML;
   }

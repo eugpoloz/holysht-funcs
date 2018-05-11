@@ -18,11 +18,12 @@ async function pickAQuote({ quotes, joke }: QuoteProps) {
     ".holyheader_quote .quote-content"
   );
 
-  if (quoteContainer instanceof HTMLElement) {
-    const quoteId = getIdx(quotes);
-    const currentQuote = quotes[quoteId];
+  const quoteId = getIdx(quotes);
+  const currentQuote = quotes[quoteId];
 
-    const quoteHTML = `${currentQuote} <a href="${joke}">Смотреть котиков?</a>`;
+  if (quoteContainer instanceof HTMLElement && currentQuote !== undefined) {
+    const quoteHTML = `${currentQuote}
+    <a href="${joke}">Смотреть котиков?</a>`;
 
     quoteContainer.innerHTML = quoteHTML;
 

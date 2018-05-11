@@ -8,9 +8,12 @@ function getIdx(array: Array<*>) {
   return Math.floor(Math.random() * length);
 }
 
-type QuoteProps = Array<string>;
+type QuoteProps = {
+  quotes: Array<string>,
+  joke: string
+};
 
-async function pickAQuote(quotes: QuoteProps, joke: string) {
+async function pickAQuote({ quotes, joke }: QuoteProps) {
   const quoteContainer = document.querySelector(
     ".holyheader_quote .quote-content"
   );

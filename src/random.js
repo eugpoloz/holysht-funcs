@@ -3,12 +3,30 @@
 
 type RandomProps = {
   howMany?: number,
-  users: Array<{
-    name: string
-  }>
+  group_id: Array<number>,
+  filteredUsers?: Array<string>
 };
 
-function randomUserGenerator({ users, howMany = 3 }: RandomProps) {
+async function randomUserGenerator({
+  filteredUsers = [],
+  group_id = [1, 2],
+  howMany = 3
+}: RandomProps) {
+  const usersFromAPI = await fetch(
+    `/api.php?method=users.get&group_id=${group_id.join(
+      ","
+    )}&fields=username,avatar&limit=100`
+  );
+
+  const apiObject = await usersFromAPI.json();
+
+  let { users } = apiObject.response;
+  if (filteredUsers.length > 0) {
+    const userSet = new Set(filteredUsers);
+
+    users = users.filter(({ username }) => !userSet.has(username));
+  }
+
   // random number generator
   // cause I don't need anything too sophisticated
   function getIdx() {

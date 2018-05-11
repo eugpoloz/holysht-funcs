@@ -8,6 +8,27 @@ function getIdx(array: Array<*>) {
   return Math.floor(Math.random() * length);
 }
 
+type QuoteProps = Array<{
+  quote: string,
+  link: string
+}>;
+
+async function pickAQuote(quotes: QuoteProps) {
+  const quoteContainer = document.querySelector(
+    ".holyheader_quote .quote-content"
+  );
+
+  const quoteId = getIdx(quotes);
+  const currentQuote = quotes[quoteId];
+
+  if (quoteContainer instanceof HTMLElement) {
+    const { quote, link } = currentQuote;
+    const quoteHTML = `${quote} <a href="${link}">Читать дальше...</a>`;
+
+    quoteContainer.innerHTML = quoteHTML;
+  }
+}
+
 type PortraitsProps = {
   board?: string, // optional forum link
   users: Array<{

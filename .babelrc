@@ -12,7 +12,9 @@
             "randomUserGenerator",
             "filteredUsers",
             "group_id",
-            "howMany"
+            "howMany",
+            "pickAQuite",
+            "quotes"
           ]
         }
       }

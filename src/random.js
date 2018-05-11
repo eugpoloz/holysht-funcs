@@ -25,6 +25,8 @@ async function pickAQuote({ quotes, joke }: QuoteProps) {
     const quoteHTML = `${currentQuote} <a href="${joke}">Смотреть котиков?</a>`;
 
     quoteContainer.innerHTML = quoteHTML;
+
+    return currentQuote;
   }
 }
 

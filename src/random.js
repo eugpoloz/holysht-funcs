@@ -14,7 +14,7 @@ async function randomUserGenerator({
 }: RandomProps) {
   const group_ids = group_id.join(",");
   const usersFromAPI = await fetch(
-    `/api.php?method=users.get&fields=username,avatar&limit=100&group_id=${group_ids}`
+    `/api.php?method=users.get&fields=user_id,username,avatar&limit=100&group_id=${group_ids}`
   );
 
   const apiObject = await usersFromAPI.json();

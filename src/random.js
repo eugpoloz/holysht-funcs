@@ -1,19 +1,42 @@
 // @flow
 "use strict";
 
-type RandomProps = {
-  board?: string, // optional forum link
-  howMany?: number,
-  group_id: Array<number>,
-  filteredUsers?: Array<string>
-};
-
 // random number generator
 // cause I don't need anything too sophisticated
 function getIdx(array: Array<*>) {
   const { length } = array;
   return Math.floor(Math.random() * length);
 }
+
+type PortraitsProps = {
+  board?: string, // optional forum link
+  users: Array<{
+    user_id: string,
+    username: string,
+    avatar: string
+  }>
+};
+
+async function createPortraits({ board = "", users }: PortraitsProps) {
+  const portraitNodeList = document.querySelectorAll(
+    ".portrait.portrait--character"
+  );
+
+  return users.forEach(({ username, user_id, avatar }, idx) => {
+    const html = `<a href="${board}/profile.php?id=${user_id}"><img src="${board}${avatar}" title="${username}" /></a>`;
+
+    if (portraitNodeList && portraitNodeList[idx]) {
+      portraitNodeList[idx].innerHTML = html;
+    }
+  });
+}
+
+type RandomProps = {
+  board?: string, // optional forum link
+  howMany?: number,
+  group_id: Array<number>,
+  filteredUsers?: Array<string>
+};
 
 async function randomUserGenerator({
   board = "",
@@ -52,8 +75,16 @@ async function randomUserGenerator({
     indexes.add(number);
   }
 
-  // and then we filter our initial array to get our desired results
-  return users.filter((user, idx) => indexes.has(idx));
+  // and then we filter our initial user array to get our desired results
+  const pickedUsers = users.filter((user, idx) => indexes.has(idx));
+
+  // ... initiate our custom func to put portraits in their place
+  createPortraits({
+    board,
+    users: pickedUsers
+  });
+
+  return pickedUsers;
 }
 
 // randomUserGenerator({

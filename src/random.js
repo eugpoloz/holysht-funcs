@@ -2,19 +2,21 @@
 "use strict";
 
 type RandomProps = {
+  board?: string, // optional forum link
   howMany?: number,
   group_id: Array<number>,
   filteredUsers?: Array<string>
 };
 
 async function randomUserGenerator({
+  board = "",
   filteredUsers = [],
   group_id = [1, 2],
   howMany = 3
 }: RandomProps) {
   const group_ids = group_id.join(",");
   const usersFromAPI = await fetch(
-    `/api.php?method=users.get&fields=user_id,username,avatar&limit=100&group_id=${group_ids}`
+    `${board}/api.php?method=users.get&fields=user_id,username,avatar&limit=100&group_id=${group_ids}`
   );
 
   const apiObject = await usersFromAPI.json();

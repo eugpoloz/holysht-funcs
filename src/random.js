@@ -8,6 +8,13 @@ type RandomProps = {
   filteredUsers?: Array<string>
 };
 
+// random number generator
+// cause I don't need anything too sophisticated
+function getIdx(array: Array<*>) {
+  const { length } = array;
+  return Math.floor(Math.random() * length);
+}
+
 async function randomUserGenerator({
   board = "",
   filteredUsers = [],
@@ -28,24 +35,17 @@ async function randomUserGenerator({
     users = users.filter(({ username }) => !userSet.has(username));
   }
 
-  // random number generator
-  // cause I don't need anything too sophisticated
-  function getIdx() {
-    const { length } = users;
-    return Math.floor(Math.random() * length);
-  }
-
   // let set up our Set
   const indexes = new Set([]);
 
   // we need to generate as many numbers as our config says,
   // and I suck at recursion, so we loop
   for (let i = 0; i < howMany; i++) {
-    let number = getIdx();
+    let number = getIdx(users);
 
     // ... and loop
     while (indexes.has(number)) {
-      number = getIdx();
+      number = getIdx(users);
     }
 
     // and add our number finally

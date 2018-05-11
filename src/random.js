@@ -8,7 +8,7 @@ type RandomProps = {
   }>
 };
 
-async function randomUserGenerator({ users, howMany = 3 }: RandomProps) {
+function randomUserGenerator({ users, howMany = 3 }: RandomProps) {
   // random number generator
   // cause I don't need anything too sophisticated
   function getIdx() {

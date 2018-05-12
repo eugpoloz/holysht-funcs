@@ -73,45 +73,48 @@ function randomUserGenerator({
   howMany = 3
 }: RandomProps) {
   const group_ids = group_id.join(",");
-  const usersFromAPI: Promise<{ response: { users: Array<User> } }> = fetch(
+
+  fetch(
     `${board}/api.php?method=users.get&fields=user_id,username,avatar&limit=100&group_id=${group_ids}`
-  ).then(api => api.json());
+  )
+    .then(response => response.json())
+    .then(({ response }) => {
+      let { users } = response;
+      if (filteredUsers.length > 0) {
+        const userSet = new Set(filteredUsers);
 
-  // $FlowFixMe TODO: fix flow bug
-  let { users } = usersFromAPI.response;
-  if (filteredUsers.length > 0) {
-    const userSet = new Set(filteredUsers);
+        users = users.filter(({ username }) => !userSet.has(username));
+      }
 
-    users = users.filter(({ username }) => !userSet.has(username));
-  }
+      // let set up our Set
+      const indexes = new Set([]);
 
-  // let set up our Set
-  const indexes = new Set([]);
+      // we need to generate as many numbers as our config says,
+      // and I suck at recursion, so we loop
+      for (let i = 0; i < howMany; i++) {
+        let number = getIdx(users);
 
-  // we need to generate as many numbers as our config says,
-  // and I suck at recursion, so we loop
-  for (let i = 0; i < howMany; i++) {
-    let number = getIdx(users);
+        // ... and loop
+        while (indexes.has(number)) {
+          number = getIdx(users);
+        }
 
-    // ... and loop
-    while (indexes.has(number)) {
-      number = getIdx(users);
-    }
+        // and add our number finally
+        indexes.add(number);
+      }
 
-    // and add our number finally
-    indexes.add(number);
-  }
+      // and then we filter our initial user array to get our desired results
+      const pickedUsers = users.filter((user, idx) => indexes.has(idx));
 
-  // and then we filter our initial user array to get our desired results
-  const pickedUsers = users.filter((user, idx) => indexes.has(idx));
+      // ... initiate our custom func to put portraits in their place
+      createPortraits({
+        board,
+        users: pickedUsers
+      });
 
-  // ... initiate our custom func to put portraits in their place
-  createPortraits({
-    board,
-    users: pickedUsers
-  });
-
-  return pickedUsers;
+      return pickedUsers;
+    })
+    .catch(error => console.error(error));
 }
 
 // randomUserGenerator({

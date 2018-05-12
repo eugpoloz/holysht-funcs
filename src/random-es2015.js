@@ -16,7 +16,7 @@ type QuoteProps = {
   joke: string
 };
 
-async function pickAQuote({ quotes, joke }: QuoteProps) {
+function pickAQuote({ quotes, joke }: QuoteProps) {
   const quoteContainer = document.querySelector(
     ".holyheader_quote .quote-content"
   );
@@ -34,16 +34,18 @@ async function pickAQuote({ quotes, joke }: QuoteProps) {
   }
 }
 
-type PortraitsProps = {
-  board?: string, // optional forum link
-  users: Array<{
-    user_id: string,
-    username: string,
-    avatar: string
-  }>
+type User = {
+  user_id: string,
+  username: string,
+  avatar: string
 };
 
-async function createPortraits({ board = "", users }: PortraitsProps) {
+type PortraitsProps = {
+  board?: string, // optional forum link
+  users: Array<User>
+};
+
+function createPortraits({ board = "", users }: PortraitsProps) {
   const portraitNodeList = document.querySelectorAll(
     ".portrait.portrait--character"
   );
@@ -64,20 +66,19 @@ type RandomProps = {
   filteredUsers?: Array<string>
 };
 
-async function randomUserGenerator({
+function randomUserGenerator({
   board = "",
   filteredUsers = [],
   group_id = [1, 2],
   howMany = 3
 }: RandomProps) {
   const group_ids = group_id.join(",");
-  const usersFromAPI = await fetch(
+  const usersFromAPI: Promise<{ response: { users: Array<User> } }> = fetch(
     `${board}/api.php?method=users.get&fields=user_id,username,avatar&limit=100&group_id=${group_ids}`
-  );
+  ).then(api => api.json());
 
-  const apiObject = await usersFromAPI.json();
-
-  let { users } = apiObject.response;
+  // $FlowFixMe TODO: fix flow bug
+  let { users } = usersFromAPI.response;
   if (filteredUsers.length > 0) {
     const userSet = new Set(filteredUsers);
 
@@ -112,3 +113,18 @@ async function randomUserGenerator({
 
   return pickedUsers;
 }
+
+// randomUserGenerator({
+//   howMany: 3,
+//   users: [
+//     { name: "Jesus Christ" },
+//     { name: "Judas Iscariot" },
+//     { name: "Lucifer" },
+//     { name: "Flying Spaghetti Monster" },
+//     { name: "Gabriel" },
+//     { name: "Yahweh" },
+//     { name: "Baron Samedi" },
+//     { name: "Maman Brigitte" },
+//     { name: "Señor de la Muerte" }
+//   ]
+// });

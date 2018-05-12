@@ -16,7 +16,7 @@ type QuoteProps = {
   joke: string
 };
 
-async function pickAQuote({ quotes, joke }: QuoteProps) {
+function pickAQuote({ quotes, joke }: QuoteProps) {
   const quoteContainer = document.querySelector(
     ".holyheader_quote .quote-content"
   );
@@ -34,16 +34,18 @@ async function pickAQuote({ quotes, joke }: QuoteProps) {
   }
 }
 
-type PortraitsProps = {
-  board?: string, // optional forum link
-  users: Array<{
-    user_id: string,
-    username: string,
-    avatar: string
-  }>
+type User = {
+  user_id: string,
+  username: string,
+  avatar: string
 };
 
-async function createPortraits({ board = "", users }: PortraitsProps) {
+type PortraitsProps = {
+  board?: string, // optional forum link
+  users: Array<User>
+};
+
+function createPortraits({ board = "", users }: PortraitsProps) {
   const portraitNodeList = document.querySelectorAll(
     ".portrait.portrait--character"
   );
@@ -64,53 +66,55 @@ type RandomProps = {
   filteredUsers?: Array<string>
 };
 
-async function randomUserGenerator({
+function randomUserGenerator({
   board = "",
   filteredUsers = [],
   group_id = [1, 2],
   howMany = 3
 }: RandomProps) {
   const group_ids = group_id.join(",");
-  const usersFromAPI = await fetch(
+
+  fetch(
     `${board}/api.php?method=users.get&fields=user_id,username,avatar&limit=100&group_id=${group_ids}`
-  );
+  )
+    .then(response => response.json())
+    .then(({ response }) => {
+      let { users } = response;
+      if (filteredUsers.length > 0) {
+        const userSet = new Set(filteredUsers);
 
-  const apiObject = await usersFromAPI.json();
+        users = users.filter(({ username }) => !userSet.has(username));
+      }
 
-  let { users } = apiObject.response;
-  if (filteredUsers.length > 0) {
-    const userSet = new Set(filteredUsers);
+      // let set up our Set
+      const indexes = new Set([]);
 
-    users = users.filter(({ username }) => !userSet.has(username));
-  }
+      // we need to generate as many numbers as our config says,
+      // and I suck at recursion, so we loop
+      for (let i = 0; i < howMany; i++) {
+        let number = getIdx(users);
 
-  // let set up our Set
-  const indexes = new Set([]);
+        // ... and loop
+        while (indexes.has(number)) {
+          number = getIdx(users);
+        }
 
-  // we need to generate as many numbers as our config says,
-  // and I suck at recursion, so we loop
-  for (let i = 0; i < howMany; i++) {
-    let number = getIdx(users);
+        // and add our number finally
+        indexes.add(number);
+      }
 
-    // ... and loop
-    while (indexes.has(number)) {
-      number = getIdx(users);
-    }
+      // and then we filter our initial user array to get our desired results
+      const pickedUsers = users.filter((user, idx) => indexes.has(idx));
 
-    // and add our number finally
-    indexes.add(number);
-  }
+      // ... initiate our custom func to put portraits in their place
+      createPortraits({
+        board,
+        users: pickedUsers
+      });
 
-  // and then we filter our initial user array to get our desired results
-  const pickedUsers = users.filter((user, idx) => indexes.has(idx));
-
-  // ... initiate our custom func to put portraits in their place
-  createPortraits({
-    board,
-    users: pickedUsers
-  });
-
-  return pickedUsers;
+      return pickedUsers;
+    })
+    .catch(error => console.error(error));
 }
 
 // randomUserGenerator({

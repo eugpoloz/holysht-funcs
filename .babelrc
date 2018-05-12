@@ -7,16 +7,7 @@
       "minify",
       {
         "mangle": {
-          "exclude": [
-            "appendSmilies",
-            "randomUserGenerator",
-            "filteredUsers",
-            "group_id",
-            "howMany",
-            "pickAQuite",
-            "quotes",
-            "joke"
-          ]
+          "exclude": ["workHeaderMagic", "quotesAndJokes", "portraits"]
         }
       }
     ],

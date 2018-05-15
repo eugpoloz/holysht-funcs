@@ -1,5 +1,5 @@
 // @flow
-import getIdx from "../../helpers/getIdx";
+import pick from "../../helpers/pick";
 import createPortraits from "./createPortraits";
 
 import type { RandomUserProps } from "../../commonTypes";
@@ -27,25 +27,7 @@ export default function randomUserGenerator(pickPortraits: RandomUserProps) {
         users = users.filter(({ username }) => !userSet.has(username));
       }
 
-      // let set up our Set
-      const indexes = new Set([]);
-
-      // we need to generate as many numbers as our config says,
-      // and I suck at recursion, so we loop
-      for (let i = 0; i < howMany; i++) {
-        let number = getIdx(users);
-
-        // ... and loop
-        while (indexes.has(number)) {
-          number = getIdx(users);
-        }
-
-        // and add our number finally
-        indexes.add(number);
-      }
-
-      // and then we filter our initial user array to get our desired results
-      const pickedUsers = users.filter((user, idx) => indexes.has(idx));
+      const pickedUsers = pick(users, howMany);
 
       // ... initiate our custom func to put portraits in their place
       createPortraits({

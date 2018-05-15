@@ -23,9 +23,3 @@ export type User = {
   username: string,
   avatar: string
 };
-
-export type PortraitsProps = {
-  board?: string, // optional forum link
-  users: Array<User>,
-  placeholder: string
-};

@@ -1,7 +1,8 @@
 // @flow
 "use strict";
 import quotePicker from "./modules/quotePicker";
-import randomUserGenerator from "./modules/randomUserGenerator";
+import currentUsers from "./modules/randomUserGenerator";
+import neededCharacters from "./modules/randomSearchGenerator";
 
 import type { QuoteProps, RandomUserProps } from "./commonTypes";
 
@@ -12,8 +13,10 @@ type HeaderProps = {
 
 export function workHeaderMagic({ quotesAndJokes, portraits }: HeaderProps) {
   quotePicker(quotesAndJokes);
-  randomUserGenerator(portraits);
+  currentUsers(portraits);
 }
+
+export { neededCharacters };
 
 // randomUserGenerator({
 //   howMany: 3,

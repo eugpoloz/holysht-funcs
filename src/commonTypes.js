@@ -18,6 +18,15 @@ export type RandomUserProps = {
   placeholder?: string
 };
 
+export type RandomNeededProps = {
+  characters: Array<{
+    href: string, // ссылка на акцию
+    src: string, // ссылка на картинку
+    title: string // всплывающая подсказка
+  }>,
+  howMany?: number
+};
+
 export type User = {
   user_id: string,
   username: string,

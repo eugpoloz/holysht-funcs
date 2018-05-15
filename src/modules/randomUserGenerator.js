@@ -9,7 +9,8 @@ export default function randomUserGenerator(pickPortraits: RandomProps) {
     board = "",
     filteredUsers = [],
     group_id = [1, 2],
-    howMany = 3
+    howMany = 3,
+    placeholder = "http://placehold.it/65x65"
   } = pickPortraits;
   const group_ids = group_id.join(",");
 
@@ -49,7 +50,8 @@ export default function randomUserGenerator(pickPortraits: RandomProps) {
       // ... initiate our custom func to put portraits in their place
       createPortraits({
         board,
-        users: pickedUsers
+        users: pickedUsers,
+        placeholder
       });
 
       return pickedUsers;

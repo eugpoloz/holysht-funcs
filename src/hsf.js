@@ -3,11 +3,11 @@
 import quotePicker from "./modules/quotePicker";
 import randomUserGenerator from "./modules/randomUserGenerator";
 
-import type { QuoteProps, RandomProps } from "./commonTypes";
+import type { QuoteProps, RandomUserProps } from "./commonTypes";
 
 type HeaderProps = {
   quotesAndJokes: QuoteProps,
-  portraits: RandomProps
+  portraits: RandomUserProps
 };
 
 export function workHeaderMagic({ quotesAndJokes, portraits }: HeaderProps) {

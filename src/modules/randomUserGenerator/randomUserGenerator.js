@@ -1,10 +1,10 @@
 // @flow
-import getIdx from "../helpers/getIdx";
+import getIdx from "../../helpers/getIdx";
 import createPortraits from "./createPortraits";
 
-import type { RandomProps } from "../commonTypes";
+import type { RandomUserProps } from "../../commonTypes";
 
-export default function randomUserGenerator(pickPortraits: RandomProps) {
+export default function randomUserGenerator(pickPortraits: RandomUserProps) {
   const {
     board = "",
     filteredUsers = [],

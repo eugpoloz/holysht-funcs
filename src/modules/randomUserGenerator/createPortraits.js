@@ -1,5 +1,5 @@
 // @flow
-import type { User } from "../commonTypes";
+import type { User } from "../../commonTypes";
 
 type PortraitsProps = {
   board?: string, // optional forum link

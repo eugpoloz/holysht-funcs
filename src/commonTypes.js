@@ -10,7 +10,7 @@ export type QuoteProps = {
   }
 };
 
-export type RandomProps = {
+export type RandomUserProps = {
   board?: string, // optional forum link
   howMany?: number,
   group_id: Array<number>,

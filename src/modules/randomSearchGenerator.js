@@ -15,7 +15,7 @@ export default function randomSearchGenerator(pickNeeded: RandomNeededProps) {
   return pickedCharacters.forEach((char, idx) => {
     const { href, src, title } = char;
 
-    const html = `<a href="${href}"><img src="${src}" title="${title}" /></a>`;
+    const html = `<a href="${href}"><img src="${src}" title="Разыскивается ${title}" /></a>`;
 
     if (portraitNodeList && portraitNodeList[idx]) {
       portraitNodeList[idx].innerHTML = html;

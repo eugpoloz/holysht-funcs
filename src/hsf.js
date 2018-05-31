@@ -4,6 +4,7 @@ import quotePicker from "./modules/quotePicker";
 import currentUsers from "./modules/randomUserGenerator";
 import neededCharacters from "./modules/randomSearchGenerator";
 import smilies from "./modules/smilies";
+import awardsSpoiler from "./modules/awardsSpoiler";
 
 import type { QuoteProps, RandomUserProps } from "./commonTypes";
 
@@ -17,7 +18,7 @@ export function workHeaderMagic({ quotesAndJokes, portraits }: HeaderProps) {
   currentUsers(portraits);
 }
 
-export { neededCharacters, smilies };
+export { neededCharacters, smilies, awardsSpoiler };
 
 // randomUserGenerator({
 //   howMany: 3,

@@ -31,7 +31,7 @@ function updateText(awards: HTMLElement, label: HTMLElement, props: Props) {
 
 function runSpoiler(props: Props) {
   if (typeof FORUM.topic === "object") {
-    console.log("v0.0.6");
+    console.log("v0.0.7");
     $(".post-author .pa-awards").each(function() {
       const wrapperClass = "mini_awards_wrapper";
       const awards = $(this).find(".mini_awards");
@@ -79,7 +79,6 @@ export default function awardsSpoiler(props: Props) {
     showText: props.showText ? props.showText : "Ачивки и плюхи",
     hideText: props.hideText ? props.hideText : "Фу, спрячь!"
   };
-  // const { showText = "Ачивки и плюхи", hideText = "Фу, спрячь!" } = props;
 
   if (document.readyState !== "complete") {
     if (window.MutationObserver) {
@@ -87,7 +86,7 @@ export default function awardsSpoiler(props: Props) {
         mutations.forEach(mutation => {
           const awards = $(mutation.target);
           const label = awards.siblings(".mini_awards_label");
-          updateText(awards, label, props);
+          updateText(awards, label, defaultProps);
         });
         awardsObserver.disconnect();
       });
@@ -99,8 +98,8 @@ export default function awardsSpoiler(props: Props) {
         });
       });
     }
-    window.addEventListener("load", () => runSpoiler(props), false);
+    window.addEventListener("load", () => runSpoiler(defaultProps), false);
   } else {
-    runSpoiler(props);
+    runSpoiler(defaultProps);
   }
 }

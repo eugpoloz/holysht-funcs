@@ -19,18 +19,3 @@ export function workHeaderMagic({ quotesAndJokes, portraits }: HeaderProps) {
 }
 
 export { neededCharacters, smilies, awardsSpoiler };
-
-// randomUserGenerator({
-//   howMany: 3,
-//   users: [
-//     { name: "Jesus Christ" },
-//     { name: "Judas Iscariot" },
-//     { name: "Lucifer" },
-//     { name: "Flying Spaghetti Monster" },
-//     { name: "Gabriel" },
-//     { name: "Yahweh" },
-//     { name: "Baron Samedi" },
-//     { name: "Maman Brigitte" },
-//     { name: "Señor de la Muerte" }
-//   ]
-// });

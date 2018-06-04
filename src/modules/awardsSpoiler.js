@@ -19,7 +19,7 @@ function returnLength(node: HTMLElement) {
 }
 
 function updateText(awards: HTMLElement, label: HTMLElement, props: Props) {
-  const { showText = "Ачивки и плюхи", hideText = "Фу, спрячь!" } = props;
+  const { showText, hideText } = props;
   const howMany = returnLength(awards);
 
   const textWithCounter = "Ачивки и плюхи" + howMany;
@@ -31,7 +31,7 @@ function updateText(awards: HTMLElement, label: HTMLElement, props: Props) {
 
 function runSpoiler(props: Props) {
   if (typeof FORUM.topic === "object") {
-    console.log("v0.0.5");
+    console.log("v0.0.6");
     $(".post-author .pa-awards").each(function() {
       const wrapperClass = "mini_awards_wrapper";
       const awards = $(this).find(".mini_awards");
@@ -75,6 +75,12 @@ function runSpoiler(props: Props) {
 }
 
 export default function awardsSpoiler(props: Props) {
+  const defaultProps = {
+    showText: props.showText ? props.showText : "Ачивки и плюхи",
+    hideText: props.hideText ? props.hideText : "Фу, спрячь!"
+  };
+  // const { showText = "Ачивки и плюхи", hideText = "Фу, спрячь!" } = props;
+
   if (document.readyState !== "complete") {
     if (window.MutationObserver) {
       const awardsObserver = new MutationObserver(mutations => {

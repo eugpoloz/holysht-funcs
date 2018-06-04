@@ -31,9 +31,8 @@ function updateText(awards: HTMLElement, label: HTMLElement, props: Props) {
 
 function runSpoiler(props: Props) {
   if (typeof FORUM.topic === "object") {
-    console.log("awards spoiler ran!");
-
-    $(".post-author .pa-awards").each(() => {
+    console.log("v0.0.5");
+    $(".post-author .pa-awards").each(function() {
       const wrapperClass = "mini_awards_wrapper";
       const awards = $(this).find(".mini_awards");
       const label = $(this).find(".mini_awards_label");
@@ -87,7 +86,7 @@ export default function awardsSpoiler(props: Props) {
         awardsObserver.disconnect();
       });
 
-      $(".post-author .pa-awards .mini_awards").each(() => {
+      $(".post-author .pa-awards .mini_awards").each(function() {
         const targetNode = $(this)[0];
         awardsObserver.observe(targetNode, {
           childList: true

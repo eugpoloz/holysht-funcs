@@ -40,7 +40,6 @@ function updateText(props: UpdateProps) {
 
 function runSpoiler(props: Props) {
   if (typeof FORUM.topic === "object") {
-    console.log("v0.0.10");
     $(".post-author .pa-awards").each(function() {
       const wrapperClass = "mini_awards_wrapper";
       const awards = $(this).find(".mini_awards");

@@ -18,8 +18,15 @@ function returnLength(node: HTMLElement) {
   return howMany;
 }
 
-function updateText(awards: HTMLElement, label: HTMLElement, props: Props) {
-  const { showText, hideText } = props;
+type UpdateProps = {
+  awards: HTMLElement,
+  label: HTMLElement,
+  textProps: Props
+};
+
+function updateText(props: UpdateProps) {
+  const { awards, label, textProps } = props;
+  const { showText, hideText } = textProps;
   const howMany = returnLength(awards);
 
   const textWithCounter = "Ачивки и плюхи" + howMany;
@@ -46,7 +53,7 @@ function runSpoiler(props: Props) {
           const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
               const awards = $(mutation.target);
-              updateText(awards, label, props);
+              updateText({ awards, label, textProps: props });
             });
             observer.disconnect();
           });
@@ -59,9 +66,9 @@ function runSpoiler(props: Props) {
           observer.observe(targetNode, observerConfig);
         }
 
-        updateText(awards, label, props);
+        updateText({ awards, label, textProps: props });
         label.click(function() {
-          updateText(awards, $(this), props);
+          updateText({ awards, label: $(this), textProps: props });
           $(this)
             .siblings("." + wrapperClass)
             .slideToggle("fast");
@@ -86,7 +93,7 @@ export default function awardsSpoiler(props: Props) {
         mutations.forEach(mutation => {
           const awards = $(mutation.target);
           const label = awards.siblings(".mini_awards_label");
-          updateText(awards, label, defaultProps);
+          updateText({ awards, label, textProps: defaultProps });
         });
         awardsObserver.disconnect();
       });

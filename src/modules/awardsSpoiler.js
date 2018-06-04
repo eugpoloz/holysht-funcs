@@ -31,6 +31,8 @@ function updateText(awards: HTMLElement, label: HTMLElement, props: Props) {
 
 function runSpoiler(props: Props) {
   if (typeof FORUM.topic === "object") {
+    console.log("awards spoiler ran!");
+
     $(".post-author .pa-awards").each(() => {
       const wrapperClass = "mini_awards_wrapper";
       const awards = $(this).find(".mini_awards");

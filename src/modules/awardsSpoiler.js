@@ -29,16 +29,18 @@ function updateText(props: UpdateProps) {
   const { showText, hideText } = textProps;
   const howMany = returnLength(awards);
 
-  const textWithCounter = "Ачивки и плюхи" + howMany;
+  if (showText !== undefined) {
+    const textWithCounter = showText + howMany;
 
-  return $(label).text() === textWithCounter
-    ? $(label).text(hideText)
-    : $(label).text(textWithCounter);
+    return $(label).text() === textWithCounter
+      ? $(label).text(hideText)
+      : $(label).text(textWithCounter);
+  }
 }
 
 function runSpoiler(props: Props) {
   if (typeof FORUM.topic === "object") {
-    console.log("v0.0.7");
+    console.log("v0.0.10");
     $(".post-author .pa-awards").each(function() {
       const wrapperClass = "mini_awards_wrapper";
       const awards = $(this).find(".mini_awards");
@@ -82,10 +84,19 @@ function runSpoiler(props: Props) {
 }
 
 export default function awardsSpoiler(props: Props) {
-  const defaultProps = {
-    showText: props.showText ? props.showText : "Ачивки и плюхи",
-    hideText: props.hideText ? props.hideText : "Фу, спрячь!"
+  let passedProps = {
+    showText: "Ачивки и плюхи",
+    hideText: "Фу, спрячь!"
   };
+
+  if (props !== undefined) {
+    if (props.showText) {
+      passedProps.showText = props.showText;
+    }
+    if (props.hideText) {
+      passedProps.hideText = props.hideText;
+    }
+  }
 
   if (document.readyState !== "complete") {
     if (window.MutationObserver) {
@@ -93,7 +104,7 @@ export default function awardsSpoiler(props: Props) {
         mutations.forEach(mutation => {
           const awards = $(mutation.target);
           const label = awards.siblings(".mini_awards_label");
-          updateText({ awards, label, textProps: defaultProps });
+          updateText({ awards, label, textProps: passedProps });
         });
         awardsObserver.disconnect();
       });
@@ -105,8 +116,8 @@ export default function awardsSpoiler(props: Props) {
         });
       });
     }
-    window.addEventListener("load", () => runSpoiler(defaultProps), false);
+    window.addEventListener("load", () => runSpoiler(passedProps), false);
   } else {
-    runSpoiler(defaultProps);
+    runSpoiler(passedProps);
   }
 }

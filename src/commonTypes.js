@@ -1,11 +1,12 @@
 // @flow
 export type QuoteProps = {
+  text?: string,
   quotes: Array<{
     quote: string,
     author: string,
     post?: string // url
   }>,
-  joke: {
+  joke?: {
     url: string,
     text?: string
   }

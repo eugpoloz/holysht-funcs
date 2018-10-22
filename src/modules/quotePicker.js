@@ -4,7 +4,7 @@ import getIdx from "../helpers/getIdx";
 import type { QuoteProps } from "../commonTypes";
 
 export default function quotePicker(quotesAndJokes: QuoteProps) {
-  const { quotes, joke } = quotesAndJokes;
+  const { quotes, joke, text = "(Читать дальше…)" } = quotesAndJokes;
   const quoteContainer = document.querySelector(
     ".holyheader_quote .quote-content"
   );
@@ -14,9 +14,8 @@ export default function quotePicker(quotesAndJokes: QuoteProps) {
 
   if (quoteContainer instanceof HTMLElement && currentQuote !== undefined) {
     const { quote, author, post } = currentQuote;
-    // const { url, text = "Читать дальше" } = joke;
     const copyright = post
-      ? ` <a href="${post}" target="_blank">(Читать дальше…)</a>`
+      ? ` <a href="${post}" target="_blank">${text}</a>`
       : "";
     const quoteHTML = `${quote} <em>(c) ${author}</em>${copyright}`;
 

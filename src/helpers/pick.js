@@ -20,5 +20,7 @@ export default function pick(array: Array<*>, howMany: number) {
   }
 
   // and then we filter our initial user array to get our desired results
-  return array.filter((user, idx) => indexes.has(idx));
+  const pickedIndexes: Array<*> = array.filter((user, idx) => indexes.has(idx));
+
+  return pickedIndexes;
 }

@@ -2,7 +2,8 @@
 export type QuoteProps = {
   quotes: Array<{
     quote: string,
-    author: string
+    author: string,
+    post?: string // url
   }>,
   joke: {
     url: string,

@@ -13,9 +13,12 @@ export default function quotePicker(quotesAndJokes: QuoteProps) {
   const currentQuote = quotes[quoteId];
 
   if (quoteContainer instanceof HTMLElement && currentQuote !== undefined) {
-    const { quote, author } = currentQuote;
-    const { url, text = "Читать дальше" } = joke;
-    const quoteHTML = `${quote} <em>(c) ${author}</em> <a href="${url}">(${text})</a>`;
+    const { quote, author, post } = currentQuote;
+    // const { url, text = "Читать дальше" } = joke;
+    const copyright = post
+      ? ` <a href="${post}" target="_blank">(Читать дальше…)</a>`
+      : "";
+    const quoteHTML = `${quote} <em>(c) ${author}</em>${copyright}`;
 
     quoteContainer.innerHTML = quoteHTML;
 

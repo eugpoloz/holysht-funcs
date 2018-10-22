@@ -1,8 +1,7 @@
 {
   "comments": false,
   "presets": [
-    ["flow"],
-    ["es2015"],
+    ["@babel/flow"],
     [
       "minify",
       {
@@ -12,12 +11,12 @@
       }
     ],
     [
-      "env",
+      "@babel/env",
       {
         "targets": {
           "browsers": [">0.25%", "not ie 11", "not op_mini all"]
         },
-        "useBuiltIns": true
+        "useBuiltIns": "usage"
       }
     ]
   ]
